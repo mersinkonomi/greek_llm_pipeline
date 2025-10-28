@@ -32,6 +32,7 @@ greek_llm_pipeline/
 │   ├── elsyn_downloads/
 │   ├── ekdd_material/
 │   ├── poets_gr/
+│   ├── mantinades_txt/
 │   ├── pdf_outputs/
 │   ├── podcasts/
 │   ├── transcriptions/
@@ -64,19 +65,24 @@ greek_llm_pipeline/
 - **Technology**: BeautifulSoup, requests
 - **Output**: Text files per poet in `data/poets_gr/`
 
-#### 4. PDF to Text Converter (`scripts/pdf_to_text.py`)
+#### 4. Mantinades.gr Downloader (`scripts/mantinades_downloader.py`)
+- **Purpose**: Download Cretan mantinades (traditional couplets) from mantinades.gr
+- **Technology**: Selenium WebDriver, BeautifulSoup
+- **Output**: Text files per category in `data/mantinades_txt/`
+
+#### 5. PDF to Text Converter (`scripts/pdf_to_text.py`)
 - **Purpose**: Convert PDF files to markdown text
 - **Technology**: pymupdf4llm
 - **Output**: Markdown text files in `data/pdf_outputs/`
 
 ### Processing Tools
 
-#### 5. Podcast Transcription (`scripts/transcribe_podcasts.sh`)
+#### 6. Podcast Transcription (`scripts/transcribe_podcasts.sh`)
 - **Purpose**: Transcribe Greek audio content
 - **Technology**: OpenAI Whisper (large-v3), CUDA
 - **Output**: Transcriptions in multiple formats in `data/transcriptions/`
 
-#### 6. MinHash Deduplication (`scripts/deduplication/`)
+#### 7. MinHash Deduplication (`scripts/deduplication/`)
 - **Purpose**: Remove duplicate documents using MinHash LSH
 - **Technology**: DataTrove, spaCy
 - **Output**: Deduplicated dataset in `data/minhash/deduplicated_output/`
