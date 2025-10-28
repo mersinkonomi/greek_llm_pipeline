@@ -3,3 +3,13 @@ webdriver-manager>=4.0.0
 colorama>=0.4.6
 requests>=2.31.0
 
+# DataTrove for deduplication
+datatrove[all]>=0.6.0
+
+# Optional but recommended for statistics
+pandas>=2.0.0
+transformers>=4.30.0
+
+# For Greek language processing
+spacy>=3.7.0
+
