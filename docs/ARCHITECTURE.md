@@ -30,10 +30,12 @@ greek_llm_pipeline/
 │   └── SETUP.md
 ├── data/                         # Data storage (not in git)
 │   ├── elsyn_downloads/
+│   ├── areiospagos/
 │   ├── ekdd_material/
 │   ├── poets_gr/
 │   ├── mantinades_txt/
 │   ├── pdf_outputs/
+│   ├── ap_decisions_all/
 │   ├── podcasts/
 │   ├── transcriptions/
 │   ├── minhash/
@@ -55,34 +57,44 @@ greek_llm_pipeline/
 - **Technology**: Selenium WebDriver, ChromeDriver
 - **Output**: PDF files in `data/elsyn_downloads/`
 
-#### 2. EKDD Materials Downloader (`scripts/ekdd_downloader.py`)
+#### 2. Areios Pagos Crawler (`scripts/areiospagos_crawler.py`)
+- **Purpose**: Discover decision codes from Greek Supreme Court
+- **Technology**: BeautifulSoup, requests, BFS traversal
+- **Output**: Coverage report + discovered codes in `data/areiospagos/`
+
+#### 3. EKDD Materials Downloader (`scripts/ekdd_downloader.py`)
 - **Purpose**: Download educational materials from resources.ekdd.gr
 - **Technology**: BeautifulSoup, requests
 - **Output**: PDFs, DOCs, PPTs in `data/ekdd_material/` + metadata CSV
 
-#### 3. Poets.gr Downloader (`scripts/poets_gr_downloader.py`)
+#### 4. Poets.gr Downloader (`scripts/poets_gr_downloader.py`)
 - **Purpose**: Download Greek poems from poets.gr
 - **Technology**: BeautifulSoup, requests
 - **Output**: Text files per poet in `data/poets_gr/`
 
-#### 4. Mantinades.gr Downloader (`scripts/mantinades_downloader.py`)
+#### 5. Mantinades.gr Downloader (`scripts/mantinades_downloader.py`)
 - **Purpose**: Download Cretan mantinades (traditional couplets) from mantinades.gr
 - **Technology**: Selenium WebDriver, BeautifulSoup
 - **Output**: Text files per category in `data/mantinades_txt/`
 
-#### 5. PDF to Text Converter (`scripts/pdf_to_text.py`)
+#### 6. PDF to Text Converter (`scripts/pdf_to_text.py`)
 - **Purpose**: Convert PDF files to markdown text
 - **Technology**: pymupdf4llm
 - **Output**: Markdown text files in `data/pdf_outputs/`
 
 ### Processing Tools
 
-#### 6. Podcast Transcription (`scripts/transcribe_podcasts.sh`)
+#### 7. HTML Encoding Fixers (`scripts/fix_html_encoding*.py`)
+- **Purpose**: Fix encoding issues in HTML files (cp1253, iso-8859-7 → UTF-8)
+- **Technology**: Python encoding detection, BeautifulSoup
+- **Output**: Fixed HTML files + UTF-8 versions
+
+#### 8. Podcast Transcription (`scripts/transcribe_podcasts.sh`)
 - **Purpose**: Transcribe Greek audio content
 - **Technology**: OpenAI Whisper (large-v3), CUDA
 - **Output**: Transcriptions in multiple formats in `data/transcriptions/`
 
-#### 7. MinHash Deduplication (`scripts/deduplication/`)
+#### 9. MinHash Deduplication (`scripts/deduplication/`)
 - **Purpose**: Remove duplicate documents using MinHash LSH
 - **Technology**: DataTrove, spaCy
 - **Output**: Deduplicated dataset in `data/minhash/deduplicated_output/`

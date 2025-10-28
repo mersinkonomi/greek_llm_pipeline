@@ -6,14 +6,16 @@ A collection of tools for collecting and processing Greek language data for LLM 
 
 ### Data Collection Tools
 1. **ELSYN Downloader** (`scripts/elsyn.py`) - Legal documents from Greek National Transparency Portal
-2. **EKDD Materials Downloader** (`scripts/ekdd_downloader.py`) - Educational materials from resources.ekdd.gr
-3. **Poets.gr Downloader** (`scripts/poets_gr_downloader.py`) - Poems from poets.gr
-4. **Mantinades.gr Downloader** (`scripts/mantinades_downloader.py`) - Cretan mantinades (traditional couplets)
-5. **PDF to Text Converter** (`scripts/pdf_to_text.py`) - Convert PDFs to markdown text
+2. **Areios Pagos Crawler** (`scripts/areiospagos_crawler.py`) - Discover decision codes from Greek Supreme Court
+3. **EKDD Materials Downloader** (`scripts/ekdd_downloader.py`) - Educational materials from resources.ekdd.gr
+4. **Poets.gr Downloader** (`scripts/poets_gr_downloader.py`) - Poems from poets.gr
+5. **Mantinades.gr Downloader** (`scripts/mantinades_downloader.py`) - Cretan mantinades (traditional couplets)
+6. **PDF to Text Converter** (`scripts/pdf_to_text.py`) - Convert PDFs to markdown text
 
 ### Processing Tools
-6. **Podcast Transcription** (`scripts/transcribe_podcasts.sh`) - Audio transcription with Whisper
-7. **MinHash Deduplication** (`scripts/deduplication/`) - Remove duplicate documents
+7. **HTML Encoding Fixers** (`scripts/fix_html_encoding*.py`) - Fix encoding issues in HTML files
+8. **Podcast Transcription** (`scripts/transcribe_podcasts.sh`) - Audio transcription with Whisper
+9. **MinHash Deduplication** (`scripts/deduplication/`) - Remove duplicate documents
 
 For detailed deduplication documentation, see [`scripts/deduplication/README.md`](scripts/deduplication/README.md).
 
@@ -226,6 +228,63 @@ python scripts/mantinades_downloader.py
 - One text file per category containing all mantinades
 - Saves to `data/mantinades_txt/`
 - Includes dates and separators
+
+---
+
+# Areios Pagos Crawler
+
+## Overview
+Discovers decision codes from the Greek Supreme Court website using BFS and probe-based methods.
+
+## Features
+- BFS discovery to find referenced codes
+- Active code probing with early stopping
+- Plateau detection to stop when no new codes found
+- Coverage reporting comparing BFS vs probed results
+
+## Usage
+
+```bash
+python scripts/areiospagos_crawler.py
+```
+
+### Output
+- Coverage report in `data/areiospagos/coverage_report.json`
+- Discovered decision codes ready for crawling
+
+---
+
+# HTML Encoding Fixers
+
+## Overview
+Fix encoding issues in downloaded HTML files, converting from Greek encodings (cp1253, iso-8859-7) to UTF-8.
+
+## Tools
+
+### Basic Fixer (`fix_html_encoding.py`)
+- Fixes UTF-8 files with wrong meta tags
+- Converts cp1253/iso-8859-7 to UTF-8
+- Creates .utf8.html versions
+- Optionally updates JSON metadata
+
+### Advanced Fixer (`fix_html_encoding_advanced.py`)
+- Handles gzip-compressed HTML
+- Detects and fixes Mojibake issues
+- Multiple encoding fallbacks
+- Outputs to separate html_utf8/ directory
+
+## Usage
+
+```bash
+# Basic encoding fix
+python scripts/fix_html_encoding.py
+
+# Advanced fix with gzip/mojibake support
+python scripts/fix_html_encoding_advanced.py
+```
+
+### Configuration
+Edit the `ROOT` or `SRC` path variables in each script to match your data structure.
 
 ---
 
