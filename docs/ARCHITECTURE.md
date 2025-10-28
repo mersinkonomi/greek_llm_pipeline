@@ -89,12 +89,17 @@ greek_llm_pipeline/
 - **Technology**: Python encoding detection, BeautifulSoup
 - **Output**: Fixed HTML files + UTF-8 versions
 
-#### 8. Podcast Transcription (`scripts/transcribe_podcasts.sh`)
+#### 8. Token Counter (`scripts/count_tokens.py`)
+- **Purpose**: Count tokens in text files using Meltemi tokenizer
+- **Technology**: Transformers, Meltemi tokenizer
+- **Output**: Token statistics and reports
+
+#### 9. Podcast Transcription (`scripts/transcribe_podcasts.sh`)
 - **Purpose**: Transcribe Greek audio content
 - **Technology**: OpenAI Whisper (large-v3), CUDA
 - **Output**: Transcriptions in multiple formats in `data/transcriptions/`
 
-#### 9. MinHash Deduplication (`scripts/deduplication/`)
+#### 10. MinHash Deduplication (`scripts/deduplication/`)
 - **Purpose**: Remove duplicate documents using MinHash LSH
 - **Technology**: DataTrove, spaCy
 - **Output**: Deduplicated dataset in `data/minhash/deduplicated_output/`

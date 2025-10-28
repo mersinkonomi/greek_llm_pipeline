@@ -14,8 +14,9 @@ A collection of tools for collecting and processing Greek language data for LLM 
 
 ### Processing Tools
 7. **HTML Encoding Fixers** (`scripts/fix_html_encoding*.py`) - Fix encoding issues in HTML files
-8. **Podcast Transcription** (`scripts/transcribe_podcasts.sh`) - Audio transcription with Whisper
-9. **MinHash Deduplication** (`scripts/deduplication/`) - Remove duplicate documents
+8. **Token Counter** (`scripts/count_tokens.py`) - Count tokens using Meltemi tokenizer
+9. **Podcast Transcription** (`scripts/transcribe_podcasts.sh`) - Audio transcription with Whisper
+10. **MinHash Deduplication** (`scripts/deduplication/`) - Remove duplicate documents
 
 For detailed deduplication documentation, see [`scripts/deduplication/README.md`](scripts/deduplication/README.md).
 
@@ -285,6 +286,32 @@ python scripts/fix_html_encoding_advanced.py
 
 ### Configuration
 Edit the `ROOT` or `SRC` path variables in each script to match your data structure.
+
+---
+
+# Token Counter
+
+## Overview
+Counts tokens in text files using the Meltemi Greek language tokenizer.
+
+## Usage
+
+```bash
+# Count tokens in current directory
+python scripts/count_tokens.py
+
+# Count tokens in specific folder
+python scripts/count_tokens.py /path/to/text/files
+
+# Use a different tokenizer
+python scripts/count_tokens.py --model bert-base-greek-uncased /path/to/files
+```
+
+### Output
+- Per-file statistics (characters and tokens)
+- Total statistics across all files
+- Averages and summary
+- Encoding fallback support (UTF-8 → ISO-8859-7)
 
 ---
 
