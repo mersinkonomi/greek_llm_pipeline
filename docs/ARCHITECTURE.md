@@ -1,4 +1,4 @@
-# Statistics Architecture
+# Architecture
 
 ## Overview
 
@@ -8,19 +8,34 @@ This repository contains tools for collecting and processing Greek language data
 
 ```
 greek_llm_pipeline/
-├── scripts/              # Main executable scripts
-│   ├── elsyn.py         # ELSYN downloader
-│   └── transcribe_podcasts.sh  # Podcast transcription
-├── config/              # Configuration files
+├── scripts/                      # Main executable scripts
+│   ├── elsyn.py                  # ELSYN legal documents downloader
+│   ├── ekdd_downloader.py        # EKDD educational materials
+│   ├── poets_gr_downloader.py    # Greek poems downloader
+│   ├── pdf_to_text.py            # PDF to markdown converter
+│   ├── transcribe_podcasts.sh    # Podcast transcription
+│   └── deduplication/            # MinHash deduplication pipeline
+│       ├── 01_signatures.py
+│       ├── 02_buckets.py
+│       ├── 03_cluster.py
+│       ├── 04_filter.py
+│       ├── 05_concat_report.sh
+│       ├── run_full_pipeline.py
+│       └── stats_by_source.py
+├── config/                       # Configuration files
 │   ├── config.example.yaml
-│   └── config.yaml      # User-specific config (not in git)
-├── docs/                # Documentation
+│   └── pipeline_conf.py
+├── docs/                         # Documentation
 │   ├── ARCHITECTURE.md
-│   └── USAGE.md
-├── data/                # Data storage (not in git)
+│   └── SETUP.md
+├── data/                         # Data storage (not in git)
 │   ├── elsyn_downloads/
+│   ├── ekdd_material/
+│   ├── poets_gr/
+│   ├── pdf_outputs/
 │   ├── podcasts/
 │   ├── transcriptions/
+│   ├── minhash/
 │   └── logs/
 ├── .gitignore
 ├── requirements.txt
@@ -32,51 +47,58 @@ greek_llm_pipeline/
 
 ## Components
 
-### 1. ELSYN Downloader (`scripts/elsyn.py`)
+### Data Collection Tools
 
-**Purpose**: Automate downloading of legal documents from the Greek transparency portal.
+#### 1. ELSYN Downloader (`scripts/elsyn.py`)
+- **Purpose**: Download legal documents from Greek transparency portal
+- **Technology**: Selenium WebDriver, ChromeDriver
+- **Output**: PDF files in `data/elsyn_downloads/`
 
-**Technology**:
-- Selenium WebDriver for browser automation
-- ChromeDriver for Chrome browser control
+#### 2. EKDD Materials Downloader (`scripts/ekdd_downloader.py`)
+- **Purpose**: Download educational materials from resources.ekdd.gr
+- **Technology**: BeautifulSoup, requests
+- **Output**: PDFs, DOCs, PPTs in `data/ekdd_material/` + metadata CSV
 
-**Features**:
-- Automated login handling
-- Bulk downloading with resume capability
-- Progress tracking
+#### 3. Poets.gr Downloader (`scripts/poets_gr_downloader.py`)
+- **Purpose**: Download Greek poems from poets.gr
+- **Technology**: BeautifulSoup, requests
+- **Output**: Text files per poet in `data/poets_gr/`
 
-**Output**: PDF files in `data/elsyn_downloads/`
+#### 4. PDF to Text Converter (`scripts/pdf_to_text.py`)
+- **Purpose**: Convert PDF files to markdown text
+- **Technology**: pymupdf4llm
+- **Output**: Markdown text files in `data/pdf_outputs/`
 
-### 2. Podcast Transcription (`scripts/transcribe_podcasts.sh`)
+### Processing Tools
 
-**Purpose**: Transcribe Greek audio content using Whisper AI.
+#### 5. Podcast Transcription (`scripts/transcribe_podcasts.sh`)
+- **Purpose**: Transcribe Greek audio content
+- **Technology**: OpenAI Whisper (large-v3), CUDA
+- **Output**: Transcriptions in multiple formats in `data/transcriptions/`
 
-**Technology**:
-- OpenAI Whisper (large-v3 model)
-- GPU acceleration (CUDA)
-- Conda environment management
-
-**Features**:
-- Multiple audio format support
-- Word-level timestamps
-- Multiple output formats (txt, srt, json, vtt, tsv)
-
-**Output**: Transcription files in `data/transcriptions/`
+#### 6. MinHash Deduplication (`scripts/deduplication/`)
+- **Purpose**: Remove duplicate documents using MinHash LSH
+- **Technology**: DataTrove, spaCy
+- **Output**: Deduplicated dataset in `data/minhash/deduplicated_output/`
 
 ## Data Flow
 
 ```
-Source Data → Processing → Output Data
-     ↓            ↓            ↓
-ELSYN Portal → Download → PDFs
-Podcasts → Transcribe → Text/Subs
+Data Collection → Processing → Clean Dataset
+       ↓              ↓              ↓
+  [Downloaders] → [Converters] → [Deduplication]
+      ↓                ↓              ↓
+  ELSYN Portal      PDF→Text      MinHash Pipeline
+  EKDD Resources    Audio→Text    Statistics
+  Poets.gr                         Final Output
 ```
 
 ## Configuration
 
-Configuration is managed through `config/config.yaml` (copy from `config.example.yaml`).
+Configuration is managed through:
+- `config/config.yaml` - General settings (copy from `config.example.yaml`)
+- `config/pipeline_conf.py` - Deduplication pipeline settings
 
 ## Logging
 
 All scripts generate detailed logs in `data/logs/` with timestamps and error tracking.
-

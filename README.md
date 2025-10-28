@@ -4,11 +4,17 @@ A collection of tools for collecting and processing Greek language data for LLM 
 
 ## Repository Contents
 
-### 1. ELSYN Downloader (`scripts/elsyn.py`)
-Automated downloader for anonymized decisions from the Greek National Transparency Portal (ΕΛΣΥΝ - ΤΝΠ).
+### Data Collection Tools
+1. **ELSYN Downloader** (`scripts/elsyn.py`) - Legal documents from Greek National Transparency Portal
+2. **EKDD Materials Downloader** (`scripts/ekdd_downloader.py`) - Educational materials from resources.ekdd.gr
+3. **Poets.gr Downloader** (`scripts/poets_gr_downloader.py`) - Poems from poets.gr
+4. **PDF to Text Converter** (`scripts/pdf_to_text.py`) - Convert PDFs to markdown text
 
-### 2. Podcast Transcription (`scripts/transcribe_podcasts.sh`)
-Automated transcription of Greek podcasts using OpenAI Whisper large-v3 model.
+### Processing Tools
+5. **Podcast Transcription** (`scripts/transcribe_podcasts.sh`) - Audio transcription with Whisper
+6. **MinHash Deduplication** (`scripts/deduplication/`) - Remove duplicate documents
+
+For detailed deduplication documentation, see [`scripts/deduplication/README.md`](scripts/deduplication/README.md).
 
 ## Project Structure
 
@@ -138,6 +144,103 @@ For each audio file, creates:
 
 ---
 
+# PDF to Text Converter
+
+## Overview
+Converts PDF files to markdown text format using pymupdf4llm.
+
+## Usage
+
+### Configure Source Folders
+Edit the `PDF_FOLDERS` list in `scripts/pdf_to_text.py`:
+
+```python
+PDF_FOLDERS = [
+    "./data/sources/Ebooks4GreeksPDFs",
+    "./data/sources/OpenBooksPDFs",
+    "./data/sources/free-ebooks",
+]
+```
+
+### Run
+```bash
+python scripts/pdf_to_text.py
+```
+
+### Output
+- Converts PDFs to `.txt` files
+- Saves in `data/pdf_outputs/` organized by source folder
+- Skips already converted files
+
+---
+
+# EKDD Materials Downloader
+
+## Overview
+Downloads educational materials (PDFs, DOCs, PPTs, ZIPs) from resources.ekdd.gr.
+
+## Usage
+
+```bash
+python scripts/ekdd_downloader.py
+```
+
+### Output
+- Downloads by category (Διοίκηση, Οικονομία, Πληροφορική, etc.)
+- Saves to `data/ekdd_material/` organized by category
+- Creates `data/ekdd_metadata.csv` with file information
+
+---
+
+# Poets.gr Downloader
+
+## Overview
+Downloads Greek poems from poets.gr, organizing by poet.
+
+## Usage
+
+```bash
+python scripts/poets_gr_downloader.py
+```
+
+### Output
+- One text file per poet containing all their poems
+- Saves to `data/poets_gr/`
+- Skips already downloaded poets
+
+---
+
+# MinHash Deduplication
+
+## Overview
+Removes duplicate documents from your dataset using MinHash LSH algorithm via DataTrove.
+
+## Quick Start
+
+```bash
+python scripts/deduplication/run_full_pipeline.py
+```
+
+For detailed documentation, configuration options, and stage-by-stage instructions, see [`scripts/deduplication/README.md`](scripts/deduplication/README.md).
+
+---
+
+## Complete Pipeline Flow
+
+1. **Collect Data**
+   - Download PDFs, web content, or legal documents
+   - Convert PDFs to text
+   - Transcribe audio content
+
+2. **Process Data**
+   - Deduplicate using MinHash
+   - Generate statistics
+   - Organize output
+
+3. **Ready for Training**
+   - Clean, deduplicated dataset
+   - Metadata and reports available
+
 ## License
 
-This tool is for educational and research purposes. Please respect the website's terms of use and rate limits.
+This tool is for educational and research purposes. Please respect website terms of use and rate limits.
