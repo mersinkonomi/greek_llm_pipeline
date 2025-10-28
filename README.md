@@ -8,11 +8,12 @@ A collection of tools for collecting and processing Greek language data for LLM 
 1. **ELSYN Downloader** (`scripts/elsyn.py`) - Legal documents from Greek National Transparency Portal
 2. **EKDD Materials Downloader** (`scripts/ekdd_downloader.py`) - Educational materials from resources.ekdd.gr
 3. **Poets.gr Downloader** (`scripts/poets_gr_downloader.py`) - Poems from poets.gr
-4. **PDF to Text Converter** (`scripts/pdf_to_text.py`) - Convert PDFs to markdown text
+4. **Mantinades.gr Downloader** (`scripts/mantinades_downloader.py`) - Cretan mantinades (traditional couplets)
+5. **PDF to Text Converter** (`scripts/pdf_to_text.py`) - Convert PDFs to markdown text
 
 ### Processing Tools
-5. **Podcast Transcription** (`scripts/transcribe_podcasts.sh`) - Audio transcription with Whisper
-6. **MinHash Deduplication** (`scripts/deduplication/`) - Remove duplicate documents
+6. **Podcast Transcription** (`scripts/transcribe_podcasts.sh`) - Audio transcription with Whisper
+7. **MinHash Deduplication** (`scripts/deduplication/`) - Remove duplicate documents
 
 For detailed deduplication documentation, see [`scripts/deduplication/README.md`](scripts/deduplication/README.md).
 
@@ -207,6 +208,24 @@ python scripts/poets_gr_downloader.py
 - One text file per poet containing all their poems
 - Saves to `data/poets_gr/`
 - Skips already downloaded poets
+
+---
+
+# Mantinades.gr Downloader
+
+## Overview
+Downloads Cretan mantinades (traditional rhyming couplets) from mantinades.gr.
+
+## Usage
+
+```bash
+python scripts/mantinades_downloader.py
+```
+
+### Output
+- One text file per category containing all mantinades
+- Saves to `data/mantinades_txt/`
+- Includes dates and separators
 
 ---
 
