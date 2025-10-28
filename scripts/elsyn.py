@@ -41,7 +41,7 @@ BASE = "https://www.elsyn.gr"
 LOGIN_URL = f"{BASE}/tnp-repo/login"
 RESULTS_URL = f"{BASE}/tnp-repo/decisions/search"
 
-DOWNLOAD_DIR = Path("tnp_repo_downloads_click")
+DOWNLOAD_DIR = Path("data/elsyn_downloads")
 DOWNLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 WAIT = 25

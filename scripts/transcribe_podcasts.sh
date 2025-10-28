@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-IN="/datadisk2/greekllm/podcasts/podcasts"
-OUT="/datadisk2/greekllm/podcasts/out"
-LOG="/datadisk2/greekllm/podcasts/logs/run_$(date +%F_%H-%M-%S).log"
+IN="./data/podcasts"
+OUT="./data/transcriptions"
+LOG="./data/logs/run_$(date +%F_%H-%M-%S).log"
 DEVICE=$(command -v nvidia-smi >/dev/null 2>&1 && echo cuda || echo cpu)
 mkdir -p "$OUT" "$(dirname "$LOG")"
 

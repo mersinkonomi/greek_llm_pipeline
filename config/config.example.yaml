@@ -1,0 +1,38 @@
+# Greek LLM Pipeline Configuration Example
+# Copy this file to config.yaml and modify as needed
+
+# ELSYN Downloader Settings
+elsyn:
+  base_url: "https://www.elsyn.gr"
+  login_url: "/tnp-repo/login"
+  results_url: "/tnp-repo/decisions/search"
+  download_dir: "./data/elsyn_downloads"
+  wait_timeout: 25
+  delay_min: 0.35
+  delay_max: 0.8
+  max_pages: 0  # 0 = all pages
+  start_page: 1
+
+# Podcast Transcription Settings
+transcription:
+  input_dir: "./data/podcasts"
+  output_dir: "./data/transcriptions"
+  log_dir: "./data/logs"
+  model: "large-v3"
+  language: "el"  # Greek
+  device: "auto"  # auto, cuda, or cpu
+  supported_formats:
+    - mp3
+    - m4a
+    - wav
+    - flac
+    - ogg
+    - webm
+    - wma
+    - aac
+
+# General Settings
+general:
+  enable_logging: true
+  log_level: "INFO"
+

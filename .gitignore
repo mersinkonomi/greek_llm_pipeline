@@ -9,11 +9,25 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
 
-# Downloads
+# Configuration
+config/config.yaml
+config/*.env
+
+# Data & Downloads
+data/
 tnp_repo_downloads_click/
 *.crdownload
 progress.json
+downloads/
+
+# Logs
+logs/
+*.log
 
 # IDE
 .vscode/
@@ -21,8 +35,19 @@ progress.json
 *.swp
 *.swo
 *~
+.cursor/
 
 # OS
 .DS_Store
 Thumbs.db
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+
+# Conda
+.conda/
+conda-meta/
 

@@ -4,11 +4,26 @@ A collection of tools for collecting and processing Greek language data for LLM 
 
 ## Repository Contents
 
-### 1. ELSYN Downloader (`elsyn.py`)
+### 1. ELSYN Downloader (`scripts/elsyn.py`)
 Automated downloader for anonymized decisions from the Greek National Transparency Portal (ΕΛΣΥΝ - ΤΝΠ).
 
-### 2. Podcast Transcription (`transcribe_podcasts.sh`)
+### 2. Podcast Transcription (`scripts/transcribe_podcasts.sh`)
 Automated transcription of Greek podcasts using OpenAI Whisper large-v3 model.
+
+## Project Structure
+
+```
+greek_llm_pipeline/
+├── scripts/              # Main executable scripts
+├── config/               # Configuration files
+├── docs/                 # Documentation
+├── data/                 # Data storage (not in git)
+├── requirements.txt      # Python dependencies
+├── README.md            # This file
+├── LICENSE              # MIT License
+├── CHANGELOG.md         # Version history
+└── CONTRIBUTING.md      # Contribution guidelines
+```
 
 ---
 
@@ -59,7 +74,7 @@ Automates the downloading of anonymized legal decisions from [ELSYN's TNP reposi
 
 1. Run the script:
 ```bash
-python elsyn.py
+python scripts/elsyn.py
 ```
 
 2. Chrome will open automatically → **Log in via gov.gr (Taxisnet)**
@@ -69,7 +84,7 @@ python elsyn.py
 
 ### Configuration
 
-Edit the settings at the top of `elsyn.py`:
+Edit the settings at the top of `scripts/elsyn.py` or use `config/config.yaml`:
 
 ```python
 MAX_PAGES = 0        # 0 = all pages, or set a limit for testing
@@ -79,7 +94,7 @@ DELAY = (0.35, 0.8) # Random delay between actions (min, max)
 ```
 
 ### Downloaded Files
-Files are saved in: `./tnp_repo_downloads_click/`
+Files are saved in: `./data/elsyn_downloads/`
 
 ---
 
@@ -100,17 +115,17 @@ Automated transcription of Greek podcasts using OpenAI Whisper large-v3 model wi
 ## Usage
 
 ### Configure Paths
-Edit `transcribe_podcasts.sh` to set your paths:
+Edit `scripts/transcribe_podcasts.sh` to set your paths, or use the config file:
 
 ```bash
-IN="/datadisk2/greekllm/podcasts/podcasts"   # Input directory
-OUT="/datadisk2/greekllm/podcasts/out"       # Output directory
-LOG="/datadisk2/greekllm/podcasts/logs"      # Logs directory
+IN="./data/podcasts"       # Input directory
+OUT="./data/transcriptions" # Output directory
+LOG="./data/logs"          # Logs directory
 ```
 
 ### Run
 ```bash
-bash transcribe_podcasts.sh
+bash scripts/transcribe_podcasts.sh
 ```
 
 ### Output
