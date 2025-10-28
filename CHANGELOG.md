@@ -5,12 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2024-XX-XX
+
+### Added
+- **Areios Pagos Crawler** (`scripts/areiospagos_crawler.py`) - Discovers decision codes from Greek Supreme Court
+- **HTML Encoding Fixers** - Fix encoding issues in HTML files:
+  - `fix_html_encoding.py` - Basic encoding fix (cp1253/iso-8859-7 → UTF-8)
+  - `fix_html_encoding_advanced.py` - Advanced fix with gzip and Mojibake detection
+
 ## [0.4.0] - 2024-XX-XX
 
 ### Added
-- **EKDD Materials Downloader** (`scripts/ekdd_downloader.py`) - Downloads educational materials from resources.ekdd.gr
-- **Poets.gr Downloader** (`scripts/poets_gr_downloader.py`) - Downloads Greek poems from poets.gr
-- **PDF to Text Converter** (`scripts/pdf_to_text.py`) - Converts PDFs to markdown using pymupdf4llm
+- **Mantinades.gr Downloader** (`scripts/mantinades_downloader.py`) - Cretan mantinades downloader
+- **EKDD Materials Downloader** (`scripts/ekdd_downloader.py`) - Educational materials from resources.ekdd.gr
+- **Poets.gr Downloader** (`scripts/poets_gr_downloader.py`) - Poems from poets.gr
+- **PDF to Text Converter** (`scripts/pdf_to_text.py`) - PDFs to markdown using pymupdf4llm
 - Comprehensive documentation for all new tools
 
 ### Changed
@@ -54,6 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - MIT License
 - Contributing guidelines
 
+[0.5.0]: https://github.com/mersinkonomi/greek_llm_pipeline/tree/v0.5.0
 [0.4.0]: https://github.com/mersinkonomi/greek_llm_pipeline/tree/v0.4.0
 [0.3.0]: https://github.com/mersinkonomi/greek_llm_pipeline/tree/v0.3.0
 [0.2.0]: https://github.com/mersinkonomi/greek_llm_pipeline/tree/v0.2.0
