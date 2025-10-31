@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/greek-mmlu.schema.json",
+  "title": "Greek MMLU Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "question",
+    "choices",
+    "answer",
+    "group",
+    "subject",
+    "level",
+    "source"
+  ],
+  "properties": {
+    "question": {
+      "type": "string",
+      "minLength": 1
+    },
+    "choices": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "answer": {
+      "type": "integer",
+      "description": "Zero-based index into choices; -1 allowed for unknown/invalid.",
+      "anyOf": [
+        { "const": -1 },
+        {
+          "allOf": [
+            { "minimum": 0 },
+            { "maximum": { "$data": "1/choices/length" } }
+          ]
+        }
+      ]
+    },
+    "group": {
+      "type": "string",
+      "minLength": 1
+    },
+    "subject": {
+      "type": "string",
+      "minLength": 1
+    },
+    "level": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}
+
+
